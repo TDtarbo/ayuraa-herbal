@@ -2,65 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-
-const categories = ["All", "Herbal Blends", "Single Herbs", "Adaptogens"];
-
-const products = [
-	{
-		id: 1,
-		slug: "ashwagandha-capsules",
-		name: "ashwagandha capsules",
-		category: "Adaptogens",
-		price: 12.99,
-		rating: 4,
-		image: "/images/hero3.png",
-		featured: true,
-		description:
-			"A natural herbal supplement traditionally used to support vitality, balance, and everyday wellness.",
-		details: [
-			"supports daily wellness",
-			"traditionally used for vitality",
-			"60 capsules per bottle",
-		],
-	},
-	{
-		id: 2,
-		slug: "neem-capsules",
-		name: "neem capsules",
-		category: "Single Herbs",
-		price: 12.99,
-		rating: 4,
-		image: "/images/hero2.png",
-	},
-	{
-		id: 3,
-		slug: "gluco-aid-capsules",
-		name: "gluco-aid capsules",
-		category: "Herbal Blends",
-		price: 12.99,
-		rating: 4,
-		image: "/images/hero1.png",
-	},
-	{
-		id: 4,
-		slug: "immuno-aid-capsules",
-		name: "immuno-aid capsules",
-		category: "Herbal Blends",
-		price: 12.99,
-		rating: 4,
-		image: "/images/hero3.png",
-	},
-	{
-		id: 5,
-		slug: "immuno-aid-capsules-2",
-		name: "immuno-aid capsules",
-		category: "Herbal Blends",
-		price: 12.99,
-		rating: 4,
-		image: "/images/hero3.png",
-	},
-];
+import { useState } from "react";
+import { productCategories, products } from "@/lib/products";
 
 function Stars({ rating }: { rating: number }) {
 	return (
@@ -85,10 +28,10 @@ export default function FeaturedProductsSection() {
 	const featuredProduct =
 		products.find((product) => product.featured) || products[0];
 
-	const filteredProducts = useMemo(() => {
-		if (activeCategory === "All") return products;
-		return products.filter((product) => product.category === activeCategory);
-	}, [activeCategory]);
+	const filteredProducts =
+		activeCategory === "All"
+			? products
+			: products.filter((product) => product.category === activeCategory);
 
 	return (
 		<section className="bg-[#f8f5ef]">
@@ -115,7 +58,7 @@ export default function FeaturedProductsSection() {
 						<div className="flex h-full flex-col justify-center px-6 py-14 sm:px-8 md:px-12 lg:px-14 xl:px-20">
 							<div className="mb-6 flex items-center gap-4">
 								<span className="h-px w-12 bg-[#b79d67]" />
-								<p className="text-[11px] tracking-[0.32em] text-[#b79d67] uppercase sm:text-xs">
+								<p className="section-eyebrow text-[#b79d67]">
 									Top Seller
 								</p>
 							</div>
@@ -126,7 +69,9 @@ export default function FeaturedProductsSection() {
 
 							<div className="mt-6 flex items-center gap-3">
 								<Stars rating={featuredProduct.rating} />
-								<span className="text-sm text-[#8d8579]">(128 reviews)</span>
+								<span className="text-sm text-[#8d8579]">
+									({featuredProduct.reviews} reviews)
+								</span>
 							</div>
 
 							<p className="mt-8 max-w-xl text-base leading-8 text-[#6f685d] md:text-lg">
@@ -184,17 +129,17 @@ export default function FeaturedProductsSection() {
 					<div className="mb-12 text-center">
 						<div className="mb-4 flex items-center justify-center gap-4">
 							<span className="h-px w-10 bg-[#b79d67] sm:w-12" />
-							<p className="text-[11px] tracking-[0.32em] text-[#b79d67] uppercase sm:text-xs">
+							<p className="section-eyebrow text-[#b79d67]">
 								Curated Selection
 							</p>
 							<span className="h-px w-10 bg-[#b79d67] sm:w-12" />
 						</div>
 
-						<h3 className="text-3xl font-light tracking-tight text-[#26231f] sm:text-4xl lg:text-5xl">
+						<h3 className="section-title text-[#26231f]">
 							Featured Products
 						</h3>
 
-						<p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#7b7468] sm:text-base">
+						<p className="section-body mx-auto mt-4 max-w-2xl text-[#7b7468]">
 							Discover our carefully selected herbal essentials, crafted for
 							everyday wellness with a refined, natural touch.
 						</p>
@@ -202,7 +147,7 @@ export default function FeaturedProductsSection() {
 
 					{/* Categories */}
 					<div className="mb-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-8">
-						{categories.map((category) => {
+						{productCategories.map((category) => {
 							const isActive = activeCategory === category;
 
 							return (
@@ -274,7 +219,7 @@ export default function FeaturedProductsSection() {
 							</Link>
 						))}
 
-						<Link href="/products" className="group block">
+						<Link href="/shop" className="group block">
 							<article className="flex h-full flex-col items-center justify-center rounded-[22px] border border-dashed border-[#ddd5c7] bg-[#fbf8f2] px-6 py-12 text-center shadow-[0_10px_30px_rgba(0,0,0,0.02)] transition duration-300 hover:-translate-y-1 hover:border-[#b79d67] hover:shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
 								<div className="mb-6 text-4xl text-[#b79d67] transition duration-300 group-hover:translate-x-1">
 									→

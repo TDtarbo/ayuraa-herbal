@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import { CartProvider } from "@/components/providers/CartProvider";
 
 export const metadata: Metadata = {
 	title: "Ayurra Herbal - Natural Skincare Solutions",
@@ -23,11 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <noscript>
-          <style>{`.reveal{opacity:1 !important;transform:none !important;}`}</style>
-        </noscript>
-        {children}
-        <Script src="/reveal.js" strategy="afterInteractive" />
+        <CartProvider>
+          <noscript>
+            <style>{`.reveal{opacity:1 !important;transform:none !important;}`}</style>
+          </noscript>
+          {children}
+          <Script src="/reveal.js" strategy="afterInteractive" />
+        </CartProvider>
       </body>
     </html>
   );

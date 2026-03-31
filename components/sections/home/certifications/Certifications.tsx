@@ -40,20 +40,20 @@ const Certifications = () => {
 				<div className="mb-14 text-center sm:mb-16">
 					<div className="mb-4 flex items-center justify-center gap-4">
 						<span className="bg-brand-gold h-px w-10 sm:w-12" />
-						<p className="text-brand-gold text-[11px] tracking-[0.32em] uppercase sm:text-xs">
+						<p className="section-eyebrow text-brand-gold">
 							Certified Quality
 						</p>
 						<span className="bg-brand-gold h-px w-10 sm:w-12" />
 					</div>
 
 					<h2
-						className={`${epilogue.className} text-brand-ink text-3xl leading-tight font-light tracking-tight sm:text-4xl lg:text-5xl`}
+						className={`${epilogue.className} section-title text-brand-ink`}
 					>
 						Trusted Standards Behind
 						<span className="text-brand-gold mt-2 block">Every Product</span>
 					</h2>
 
-					<p className="text-brand-copy-soft mx-auto mt-5 max-w-2xl text-sm leading-7 sm:text-base">
+					<p className="section-body text-brand-copy-soft mx-auto mt-5 max-w-2xl">
 						Our herbal products are developed with care and supported by
 						recognized standards in quality, safety, and manufacturing
 						excellence.

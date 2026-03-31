@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiShoppingCart, CiMenuFries } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 import { Ephesis, Epilogue } from "next/font/google";
-import RevealWrapper from "../util/RevealWrapper";
+import { useCart } from "@/components/providers/CartProvider";
 
 const ephesis = Ephesis({ subsets: ["latin"], weight: "400" });
 const epilogue = Epilogue({
@@ -22,6 +23,8 @@ const navLinks = [
 
 export default function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const pathname = usePathname();
+	const { itemCount } = useCart();
 
 	useEffect(() => {
 		if (mobileMenuOpen) {
@@ -34,6 +37,15 @@ export default function Header() {
 			document.body.style.overflow = "";
 		};
 	}, [mobileMenuOpen]);
+
+	const isActiveLink = (href: string) => {
+		if (href === "/") return pathname === "/";
+		if (href === "/shop") {
+			return pathname === "/shop" || pathname.startsWith("/products");
+		}
+
+		return pathname === href || pathname.startsWith(`${href}/`);
+	};
 
 	return (
 		<>
@@ -61,7 +73,12 @@ export default function Header() {
 							<Link
 								key={link.name}
 								href={link.href}
-								className={`${epilogue.className} relative text-[11px] tracking-[0.24em] text-[#4f493f] uppercase transition duration-300 after:absolute after:-bottom-2 after:left-0 after:h-px after:w-0 after:bg-[#b79d67] after:transition-all after:duration-300 hover:text-[#b79d67] hover:after:w-full`}
+								className={`${epilogue.className} relative text-[11px] tracking-[0.24em] uppercase transition duration-300 after:absolute after:-bottom-2 after:left-0 after:h-px after:bg-[#b79d67] after:transition-all after:duration-300 ${
+									isActiveLink(link.href)
+										? "text-[#b79d67] after:w-full"
+										: "text-[#4f493f] after:w-0 hover:text-[#b79d67] hover:after:w-full"
+								}`}
+								aria-current={isActiveLink(link.href) ? "page" : undefined}
 							>
 								{link.name}
 							</Link>
@@ -71,7 +88,7 @@ export default function Header() {
 					{/* Right: Actions */}
 					<div className="flex items-center gap-3 sm:gap-4">
 						<Link
-							href="/products"
+							href="/shop"
 							className={`${epilogue.className} hidden rounded-full border border-[#d8d0c2] px-5 py-2.5 text-[10px] tracking-[0.24em] text-[#4f493f] uppercase transition duration-300 hover:border-[#b79d67] hover:text-[#b79d67] md:inline-flex`}
 						>
 							Explore
@@ -83,9 +100,11 @@ export default function Header() {
 							aria-label="Shopping cart"
 						>
 							<CiShoppingCart className="h-6 w-6" />
-							<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#b79d67] text-[10px] text-white shadow-sm">
-								2
-							</span>
+							{itemCount > 0 && (
+								<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#b79d67] text-[10px] text-white shadow-sm">
+									{itemCount}
+								</span>
+							)}
 						</Link>
 
 						<button
@@ -161,7 +180,12 @@ export default function Header() {
 											index !== navLinks.length - 1
 												? "border-b border-[#ece3d6]"
 												: ""
-										} py-5 text-[1.15rem] tracking-[0.18em] text-[#26231f] uppercase transition duration-300 hover:pl-2 hover:text-[#b79d67]`}
+										} py-5 text-[1.15rem] tracking-[0.18em] uppercase transition duration-300 ${
+											isActiveLink(link.href)
+												? "pl-2 text-[#b79d67]"
+												: "text-[#26231f] hover:pl-2 hover:text-[#b79d67]"
+										}`}
+										aria-current={isActiveLink(link.href) ? "page" : undefined}
 									>
 										{link.name}
 									</Link>
@@ -174,7 +198,7 @@ export default function Header() {
 					<div className="border-t border-[#e7dfd2] pt-6">
 						<div className="flex flex-col gap-3">
 							<Link
-								href="/products"
+								href="/shop"
 								onClick={() => setMobileMenuOpen(false)}
 								className={`${epilogue.className} inline-flex min-h-12.5 items-center justify-center rounded-full border border-[#b79d67] bg-[#b79d67] px-6 py-3 text-[10px] tracking-[0.24em] text-white uppercase transition duration-300 hover:border-[#a88d56] hover:bg-[#a88d56]`}
 							>

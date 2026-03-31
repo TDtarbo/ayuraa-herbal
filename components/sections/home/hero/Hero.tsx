@@ -37,33 +37,29 @@ const Hero = () => {
 				</div>
 
 				{/* Left Content Panel (SECOND on mobile, centered) */}
-				<div className="relative order-2 flex items-center justify-center bg-brand-ivory px-5 py-12 sm:px-8 md:px-10 lg:order-1 lg:justify-start lg:px-12 lg:pt-20 xl:px-16 2xl:px-20">
+				<div className="relative order-2 flex items-center justify-center bg-brand-ivory px-5 py-10 sm:px-8 md:px-15 lg:order-1 lg:justify-start lg:px-12 lg:pt-20 xl:px-16 2xl:px-22 2xl:translate-x-[5%]">
 					<div className="flex w-full flex-col items-center text-center lg:items-start lg:text-left">
 						<div className="mb-5 flex items-center justify-center gap-4 lg:justify-start">
 							<span className="bg-brand-gold h-px w-10" />
-							<p className="text-brand-gold text-[10px] tracking-[0.32em] uppercase sm:text-xs">
+							<p className="section-eyebrow text-brand-gold">
 								Pure Herbal Wellness
 							</p>
 						</div>
 
 						<h1
-							className={`${epilogue.className} text-brand-ink leading-[0.94] tracking-[-0.04em]`}
-							style={{ fontSize: "clamp(2.6rem, 4.8vw, 5.6rem)" }}
+							className={`${epilogue.className} hero-display-title text-brand-ink`}
 						>
 							The power of nature,
 							<span className="text-brand-olive-soft mt-1 block">refined for</span>
 							<span className="block">everyday care.</span>
 						</h1>
 
-						<div
-							className={`${ephesis.className} text-brand-gold mt-5 leading-none`}
-							style={{ fontSize: "clamp(2.8rem, 4vw, 4.9rem)" }}
-						>
+						<div className={`${ephesis.className} hero-script-title text-brand-gold mt-5`}>
 							Ayurra Herbal
 						</div>
 
 						<p
-							className={`${epilogueLight.className} text-brand-copy mt-6 max-w-136 text-sm leading-7 sm:text-base lg:text-[1.05rem]`}
+							className={`${epilogueLight.className} section-body text-brand-copy mt-6 max-w-136 lg:text-[1.05rem]`}
 						>
 							Experience the healing benefits of premium herbal products,
 							crafted with care and backed by science for everyday wellness.
@@ -71,7 +67,7 @@ const Hero = () => {
 
 						<div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-start">
 							<Link
-								href="/shop"
+								href="/products"
 								className="bg-brand-gold border-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover inline-flex min-h-11.5 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300"
 							>
 								Shop Now

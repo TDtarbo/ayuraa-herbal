@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 export default function SiteFooter() {
 	return (
@@ -21,24 +21,24 @@ export default function SiteFooter() {
 						</h4>
 						<ul className="mt-4 space-y-3 text-sm text-[#d8d1c5]">
 							<li>
-								<a href="/" className="transition hover:text-white">
+								<Link href="/" className="transition hover:text-white">
 									Home
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="/shop" className="transition hover:text-white">
+								<Link href="/shop" className="transition hover:text-white">
 									Shop
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="/about" className="transition hover:text-white">
+								<Link href="/about" className="transition hover:text-white">
 									About Us
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="/contact" className="transition hover:text-white">
+								<Link href="/contact" className="transition hover:text-white">
 									Contact
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -84,15 +84,15 @@ export default function SiteFooter() {
 						<p>© 2026 Ayurra Herbal. All rights reserved.</p>
 
 						<div className="flex flex-wrap items-center gap-5">
-							<a href="/privacy-policy" className="transition hover:text-white">
+							<Link href="/privacy-policy" className="transition hover:text-white">
 								Privacy Policy
-							</a>
-							<a href="/terms" className="transition hover:text-white">
+							</Link>
+							<Link href="/terms" className="transition hover:text-white">
 								Terms & Conditions
-							</a>
-							<a href="/shipping" className="transition hover:text-white">
+							</Link>
+							<Link href="/shipping" className="transition hover:text-white">
 								Shipping & Returns
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

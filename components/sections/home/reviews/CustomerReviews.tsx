@@ -108,6 +108,7 @@ export default function CustomerReviews() {
 		() => chunkArray(reviews, cardsPerSlide),
 		[cardsPerSlide],
 	);
+	const visibleSlide = Math.min(currentSlide, Math.max(slides.length - 1, 0));
 
 	useEffect(() => {
 		if (slides.length <= 1) return;
@@ -119,23 +120,17 @@ export default function CustomerReviews() {
 		return () => clearInterval(interval);
 	}, [slides.length]);
 
-	useEffect(() => {
-		if (currentSlide >= slides.length) {
-			setCurrentSlide(0);
-		}
-	}, [slides.length, currentSlide]);
-
 	return (
 		<section className="bg-brand-ivory-alt px-4 py-16 sm:px-6 lg:px-10">
 			<div className="mx-auto max-w-7xl">
 				<div className="mb-10 text-center">
-					<p className="text-brand-gold-soft mb-3 text-xs tracking-[0.3em] uppercase">
+					<p className="section-eyebrow text-brand-gold-soft mb-3">
 						Customer Feedback
 					</p>
-					<h2 className="text-brand-ink-muted text-3xl font-light tracking-tight sm:text-4xl">
+					<h2 className="section-title text-brand-ink-muted">
 						What Our Customers Say
 					</h2>
-					<p className="text-brand-copy-secondary mx-auto mt-4 max-w-2xl text-sm leading-6 sm:text-base">
+					<p className="section-body text-brand-copy-secondary mx-auto mt-4 max-w-2xl leading-6">
 						Real experiences from customers who trust our herbal wellness
 						products in their daily routine.
 					</p>
@@ -144,7 +139,7 @@ export default function CustomerReviews() {
 				<div className="overflow-hidden">
 					<div
 						className="flex transition-transform duration-700 ease-in-out"
-						style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+						style={{ transform: `translateX(-${visibleSlide * 100}%)` }}
 					>
 						{slides.map((slide, slideIndex) => (
 							<div
@@ -186,7 +181,7 @@ export default function CustomerReviews() {
 								aria-label={`Go to slide ${index + 1}`}
 								onClick={() => setCurrentSlide(index)}
 								className={`h-2.5 w-2.5 rounded-full transition-all ${
-									currentSlide === index
+									visibleSlide === index
 										? "bg-brand-gold-soft scale-110"
 										: "bg-brand-border-indicator"
 								}`}
