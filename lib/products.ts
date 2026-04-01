@@ -181,6 +181,60 @@ export const products: Product[] = [
 		format: "Capsules",
 		size: "60 count",
 	},
+	{
+		id: 7,
+		slug: "moringa-capsules",
+		name: "moringa capsules",
+		category: "Single Herbs",
+		price: 11.99,
+		rating: 4,
+		reviews: 72,
+		image: "/images/hero21.png",
+		description:
+			"A simple herbal essential chosen by customers who appreciate uncomplicated daily support.",
+		longDescription:
+			"Moringa offers a clean and approachable way to build a routine around familiar plant-based ingredients. This format keeps the experience minimal, polished, and easy to return to.",
+		details: [
+			"single-herb classic",
+			"minimal daily routine support",
+			"60 capsules per bottle",
+		],
+		benefits: [
+			"Straightforward, focused herbal option",
+			"Designed for lightweight everyday routines",
+			"Neat presentation for organized wellness shelves",
+		],
+		ritual: "Ideal for customers who prefer clean, uncomplicated rituals.",
+		format: "Capsules",
+		size: "60 count",
+	},
+	{
+		id: 8,
+		slug: "moringa-capsules",
+		name: "moringa capsules",
+		category: "Single Herbs",
+		price: 11.99,
+		rating: 4,
+		reviews: 72,
+		image: "/images/hero21.png",
+		description:
+			"A simple herbal essential chosen by customers who appreciate uncomplicated daily support.",
+		longDescription:
+			"Moringa offers a clean and approachable way to build a routine around familiar plant-based ingredients. This format keeps the experience minimal, polished, and easy to return to.",
+		details: [
+			"single-herb classic",
+			"minimal daily routine support",
+			"60 capsules per bottle",
+		],
+		benefits: [
+			"Straightforward, focused herbal option",
+			"Designed for lightweight everyday routines",
+			"Neat presentation for organized wellness shelves",
+		],
+		ritual: "Ideal for customers who prefer clean, uncomplicated rituals.",
+		format: "Capsules",
+		size: "60 count",
+	},
 ];
 
 export const productCategories = [

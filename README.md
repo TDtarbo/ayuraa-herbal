@@ -37,3 +37,20 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # ayuraa-herbal
 # ayuraa-herbal
 # ayuraa-herbal
+
+## Google Sheets order storage
+
+The checkout API now appends each order to Google Sheets instead of writing to `data/orders.txt`.
+
+Create a local `.env.local` with:
+
+```bash
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n"
+GOOGLE_SHEET_ID=your_google_sheet_id
+GOOGLE_SHEET_NAME=Orders
+```
+
+Expected columns in the sheet:
+
+`Order ID | Placed At | Customer Name | Phone Number | Address | Email | Notes | Distinct Items | Total Units | Item Summary | Subtotal | Shipping | Total`

@@ -32,6 +32,7 @@ export default function FeaturedProductsSection() {
 		activeCategory === "All"
 			? products
 			: products.filter((product) => product.category === activeCategory);
+	const visibleProducts = filteredProducts.slice(0, 5);
 
 	return (
 		<section className="bg-[#f8f5ef]">
@@ -173,7 +174,7 @@ export default function FeaturedProductsSection() {
 
 					{/* Cards */}
 					<div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-						{filteredProducts.map((product, index) => (
+						{visibleProducts.map((product, index) => (
 							<Link
 								key={product.id}
 								href={`/products/${product.slug}`}

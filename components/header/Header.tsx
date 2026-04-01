@@ -87,13 +87,7 @@ export default function Header() {
 
 					{/* Right: Actions */}
 					<div className="flex items-center gap-3 sm:gap-4">
-						<Link
-							href="/shop"
-							className={`${epilogue.className} hidden rounded-full border border-[#d8d0c2] px-5 py-2.5 text-[10px] tracking-[0.24em] text-[#4f493f] uppercase transition duration-300 hover:border-[#b79d67] hover:text-[#b79d67] md:inline-flex`}
-						>
-							Explore
-						</Link>
-
+					
 						<Link
 							href="/cart"
 							className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#ddd3c4] bg-[#fffaf1] text-[#26231f] transition duration-300 hover:border-[#b79d67] hover:text-[#b79d67]"

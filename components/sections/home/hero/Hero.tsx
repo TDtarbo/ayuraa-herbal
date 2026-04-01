@@ -7,10 +7,10 @@ const epilogueLight = Epilogue({ subsets: ["latin"], weight: "300" });
 
 const Hero = () => {
 	return (
-		<section className="relative bg-brand-ivory">
+		<section className="bg-brand-ivory relative">
 			<div className="mx-auto grid min-h-[85vh] lg:grid-cols-[1fr_1fr] xl:grid-cols-[1.15fr_0.95fr]">
 				{/* Right Visual Panel (FIRST on mobile) */}
-				<div className="relative order-1 min-h-100 bg-brand-ivory-deep lg:order-2 lg:min-h-0">
+				<div className="bg-brand-ivory-deep relative order-1 min-h-100 lg:order-2 lg:min-h-0">
 					{/* Mobile / vertical breakpoint image */}
 					<div
 						className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
@@ -28,7 +28,7 @@ const Hero = () => {
 					/>
 
 					<div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8">
-						<div className="rounded-full border border-brand-border-highlight bg-brand-paper/95 px-4 py-2.5 shadow-[0_10px_25px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:px-5">
+						<div className="border-brand-border-highlight bg-brand-paper/95 rounded-full border px-4 py-2.5 shadow-[0_10px_25px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:px-5">
 							<p className="text-brand-copy-label-warm text-[10px] tracking-[0.24em] uppercase sm:text-[11px]">
 								100% Natural
 							</p>
@@ -37,7 +37,7 @@ const Hero = () => {
 				</div>
 
 				{/* Left Content Panel (SECOND on mobile, centered) */}
-				<div className="relative order-2 flex items-center justify-center bg-brand-ivory px-5 py-10 sm:px-8 md:px-15 lg:order-1 lg:justify-start lg:px-12 lg:pt-20 xl:px-16 2xl:px-22 2xl:translate-x-[5%]">
+				<div className="bg-brand-ivory relative order-2 flex items-center justify-center px-5 py-10 sm:px-8 md:px-15 lg:order-1 lg:justify-start lg:px-12 lg:pt-20 xl:px-16 2xl:translate-x-[5%] 2xl:px-22">
 					<div className="flex w-full flex-col items-center text-center lg:items-start lg:text-left">
 						<div className="mb-5 flex items-center justify-center gap-4 lg:justify-start">
 							<span className="bg-brand-gold h-px w-10" />
@@ -50,11 +50,15 @@ const Hero = () => {
 							className={`${epilogue.className} hero-display-title text-brand-ink`}
 						>
 							The power of nature,
-							<span className="text-brand-olive-soft mt-1 block">refined for</span>
+							<span className="text-brand-olive-soft mt-1 block">
+								refined for
+							</span>
 							<span className="block">everyday care.</span>
 						</h1>
 
-						<div className={`${ephesis.className} hero-script-title text-brand-gold mt-5`}>
+						<div
+							className={`${ephesis.className} hero-script-title text-brand-gold mt-5`}
+						>
 							Ayurra Herbal
 						</div>
 
