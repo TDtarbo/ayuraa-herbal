@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { formatLkr } from "@/lib/currency";
 import { productCategories, products } from "@/lib/products";
 
 function Stars({ rating }: { rating: number }) {
@@ -99,7 +100,7 @@ export default function FeaturedProductsSection() {
 										Price
 									</p>
 									<p className="mt-2 text-3xl font-medium text-[#26231f]">
-										${featuredProduct.price.toFixed(2)}
+										{formatLkr(featuredProduct.price)}
 									</p>
 								</div>
 
@@ -174,21 +175,13 @@ export default function FeaturedProductsSection() {
 
 					{/* Cards */}
 					<div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-						{visibleProducts.map((product, index) => (
+						{visibleProducts.map((product) => (
 							<Link
 								key={product.id}
 								href={`/products/${product.slug}`}
 								className="group block"
 							>
 								<article className="relative flex h-full flex-col rounded-[22px] border border-[#e6dfd2] bg-[#f7f4ed] px-6 pt-7 pb-8 text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.06)] sm:px-7">
-									{index === 0 && (
-										<div className="absolute top-0 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2">
-											<span className="inline-flex rounded-full border border-[#cdb98c] bg-[#b79d67] px-4 py-2 text-[10px] tracking-[0.24em] text-white uppercase shadow-sm">
-												Top Seller
-											</span>
-										</div>
-									)}
-
 									<div className="flex min-h-65 items-center justify-center sm:min-h-75">
 										<Image
 											src={product.image}
@@ -208,7 +201,7 @@ export default function FeaturedProductsSection() {
 									</h4>
 
 									<p className="mt-4 text-xl font-medium text-[#26231f] sm:text-2xl">
-										${product.price.toFixed(2)}
+										{formatLkr(product.price)}
 									</p>
 
 									<div className="mt-auto pt-7">

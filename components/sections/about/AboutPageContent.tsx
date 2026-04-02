@@ -3,7 +3,10 @@ import Link from "next/link";
 import { Epilogue } from "next/font/google";
 import RevealWrapper from "@/components/util/RevealWrapper";
 
-const epilogue = Epilogue({ subsets: ["latin"], weight: ["300", "400", "500"] });
+const epilogue = Epilogue({
+	subsets: ["latin"],
+	weight: ["300", "400", "500"],
+});
 
 const values = [
 	{
@@ -53,7 +56,7 @@ const trustPoints = [
 export default function AboutPageContent() {
 	return (
 		<>
-			<section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(183,157,103,0.16),_transparent_30%),linear-gradient(180deg,#fcfaf6_0%,#f8f4ec_100%)] px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
+			<section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(183,157,103,0.16),transparent_30%),linear-gradient(180deg,#fcfaf6_0%,#f8f4ec_100%)] px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
 				<Image
 					src="/images/icon-dark.png"
 					alt="Decorative botanical mark"
@@ -67,31 +70,37 @@ export default function AboutPageContent() {
 						<div className="relative z-10">
 							<div className="mb-5 flex items-center gap-4">
 								<span className="bg-brand-gold h-px w-10" />
-								<p className="section-eyebrow text-brand-gold">About Ayurra Herbal</p>
+								<p className="section-eyebrow text-brand-gold">
+									About Ayurra Herbal
+								</p>
 							</div>
 
-							<h1 className={`${epilogue.className} text-brand-ink max-w-2xl text-4xl leading-[1.02] font-light tracking-tight sm:text-5xl lg:text-[4.4rem]`}>
+							<h1
+								className={`${epilogue.className} text-brand-ink max-w-2xl text-4xl leading-[1.02] font-light tracking-tight sm:text-5xl lg:text-[4.4rem]`}
+							>
 								Herbal wellness,
-								<span className="mt-2 block text-brand-gold">presented with a quieter kind of luxury.</span>
+								<span className="text-brand-gold mt-2 block">
+									presented with a quieter kind of luxury.
+								</span>
 							</h1>
 
 							<p className="section-body text-brand-copy mt-6 max-w-2xl text-base leading-8 sm:text-lg">
 								Ayurra Herbal exists to make everyday wellness feel grounded,
 								beautiful, and easy to trust. We bring together plant-led care,
-								premium presentation, and a calmer visual rhythm so the experience
-								feels as considered as the formulas themselves.
+								premium presentation, and a calmer visual rhythm so the
+								experience feels as considered as the formulas themselves.
 							</p>
 
 							<div className="mt-8 flex flex-wrap gap-3">
 								<Link
 									href="/shop"
-									className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-gold bg-brand-gold px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300 hover:border-brand-gold-hover hover:bg-brand-gold-hover"
+									className="border-brand-gold bg-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300"
 								>
 									Explore Shop
 								</Link>
 								<Link
 									href="/cart"
-									className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-border-button bg-brand-paper/90 px-7 py-3 text-[11px] tracking-[0.24em] text-brand-copy-ui uppercase transition duration-300 hover:border-brand-gold hover:text-brand-gold"
+									className="border-brand-border-button bg-brand-paper/90 text-brand-copy-ui hover:border-brand-gold hover:text-brand-gold inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] uppercase transition duration-300"
 								>
 									View Cart
 								</Link>
@@ -105,11 +114,11 @@ export default function AboutPageContent() {
 										delay={120 + index * 70}
 										asChild
 									>
-										<div className="rounded-[24px] border border-brand-border-soft bg-brand-paper/90 p-5 shadow-[0_10px_30px_var(--shadow-black-03)] backdrop-blur-sm">
+										<div className="border-brand-border-soft bg-brand-paper/90 rounded-3xl border p-5 shadow-[0_10px_30px_var(--shadow-black-03)] backdrop-blur-sm">
 											<p className="section-eyebrow text-brand-copy-label">
 												{point.label}
 											</p>
-											<p className="mt-3 text-sm leading-6 font-medium text-brand-ink">
+											<p className="text-brand-ink mt-3 text-sm leading-6 font-medium">
 												{point.value}
 											</p>
 										</div>
@@ -121,28 +130,16 @@ export default function AboutPageContent() {
 
 					<RevealWrapper direction="left" delay={80} asChild>
 						<div className="relative z-10">
-							<div className="relative overflow-hidden rounded-[34px] border border-brand-border-soft bg-brand-paper p-4 shadow-[0_18px_50px_var(--shadow-black-05)] sm:p-5">
-								<div className="relative overflow-hidden rounded-[30px] bg-brand-ivory">
+							<div className="border-brand-border-soft bg-brand-paper relative overflow-hidden rounded-[34px] border p-4 shadow-[0_18px_50px_var(--shadow-black-05)] sm:p-5">
+								<div className="bg-brand-ivory flex items-center justify-center overflow-hidden rounded-[30px]">
 									<Image
-										src="/images/hero22.png"
+										src="/logos/logo_vertical.png"
 										alt="Ayurra Herbal brand visual"
-										width={900}
-										height={1100}
-										className="h-[500px] w-full object-cover sm:h-[560px]"
+										width={500}
+										height={500}
+										className="max-w-full bg-cover sm:h-140"
 										priority
 									/>
-
-									<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(180deg,transparent,rgba(38,35,31,0.12))]" />
-									<RevealWrapper direction="rise" delay={160} asChild>
-										<div className="absolute right-5 bottom-5 max-w-56 rounded-[22px] border border-white/25 bg-[#fffaf1]/88 px-4 py-3 shadow-[0_14px_32px_var(--shadow-black-05)] backdrop-blur-sm">
-											<p className="section-eyebrow text-brand-copy-label">
-												Brand Note
-											</p>
-											<p className="mt-2 text-sm leading-6 text-brand-ink">
-												Quietly premium. Never overworked.
-											</p>
-										</div>
-									</RevealWrapper>
 								</div>
 							</div>
 						</div>
@@ -153,15 +150,21 @@ export default function AboutPageContent() {
 			<section className="bg-brand-ivory px-4 py-16 sm:px-6 lg:px-10 lg:py-22">
 				<div className="mx-auto max-w-7xl space-y-8">
 					<RevealWrapper direction="up" asChild>
-						<div className="overflow-hidden rounded-[34px] border border-brand-border-soft bg-[linear-gradient(135deg,#fffaf1_0%,#f4ecde_100%)] shadow-[0_14px_38px_var(--shadow-black-03)]">
+						<div className="border-brand-border-soft overflow-hidden rounded-[34px] border bg-[linear-gradient(135deg,#fffaf1_0%,#f4ecde_100%)] shadow-[0_14px_38px_var(--shadow-black-03)]">
 							<div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-								<div className="border-brand-border-soft bg-[#24211d] p-7 text-brand-ivory sm:p-8 lg:border-r">
-									<p className="section-eyebrow text-brand-copy-cream">Our Story</p>
-									<h2 className={`${epilogue.className} mt-3 text-3xl leading-tight font-light tracking-tight text-white sm:text-4xl`}>
+								<div className="border-brand-border-soft text-brand-ivory bg-[#24211d] p-7 sm:p-8 lg:border-r">
+									<p className="section-eyebrow text-brand-copy-cream">
+										Our Story
+									</p>
+									<h2
+										className={`${epilogue.className} mt-3 text-3xl leading-tight font-light tracking-tight text-white sm:text-4xl`}
+									>
 										Rooted in herbal tradition. Styled for modern routines.
 									</h2>
-									<div className="mt-8 rounded-[24px] border border-white/10 bg-white/5 p-5">
-										<p className="section-eyebrow text-brand-copy-cream">Core Idea</p>
+									<div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-5">
+										<p className="section-eyebrow text-brand-copy-cream">
+											Core Idea
+										</p>
 										<p className="mt-3 text-base leading-8 text-[#e6dfd2]">
 											Wellness can feel authentic and elegant at the same time.
 										</p>
@@ -171,23 +174,24 @@ export default function AboutPageContent() {
 								<div className="p-7 sm:p-8">
 									<p className="section-body text-brand-copy">
 										Ayurra Herbal started with the belief that herbal wellness
-										brands do not have to choose between authenticity and elegance.
-										Traditional plant-led thinking can still be expressed through a
-										visual language that feels clean, warm, and contemporary.
+										brands do not have to choose between authenticity and
+										elegance. Traditional plant-led thinking can still be
+										expressed through a visual language that feels clean, warm,
+										and contemporary.
 									</p>
 									<p className="section-body text-brand-copy mt-5">
-										That belief shapes everything from the tone of our product pages
-										to the way each bottle is framed: less clutter, more clarity,
-										and a calmer overall experience.
+										That belief shapes everything from the tone of our product
+										pages to the way each bottle is framed: less clutter, more
+										clarity, and a calmer overall experience.
 									</p>
 									<div className="border-brand-border-soft mt-8 flex flex-wrap gap-3 border-t pt-6">
-										<div className="rounded-full border border-brand-border-highlight bg-brand-paper px-4 py-2 text-sm text-brand-copy-ui">
+										<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
 											Traditional foundation
 										</div>
-										<div className="rounded-full border border-brand-border-highlight bg-brand-paper px-4 py-2 text-sm text-brand-copy-ui">
+										<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
 											Modern presentation
 										</div>
-										<div className="rounded-full border border-brand-border-highlight bg-brand-paper px-4 py-2 text-sm text-brand-copy-ui">
+										<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
 											Clearer daily rituals
 										</div>
 									</div>
@@ -197,15 +201,19 @@ export default function AboutPageContent() {
 					</RevealWrapper>
 
 					<RevealWrapper direction="up" delay={90} asChild>
-						<div className="rounded-[34px] border border-brand-border-soft bg-brand-paper p-7 shadow-[0_14px_38px_var(--shadow-black-03)] sm:p-8">
+						<div className="border-brand-border-soft bg-brand-paper rounded-[34px] border p-7 shadow-[0_14px_38px_var(--shadow-black-03)] sm:p-8">
 							<div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 								<div>
-									<p className="section-eyebrow text-brand-gold">What Guides Us</p>
-									<h2 className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl`}>
+									<p className="section-eyebrow text-brand-gold">
+										What Guides Us
+									</p>
+									<h2
+										className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl`}
+									>
 										Three values that shape every decision.
 									</h2>
 								</div>
-								<div className="rounded-full border border-brand-border-highlight bg-brand-ivory px-4 py-2 text-sm text-brand-copy-ui">
+								<div className="border-brand-border-highlight bg-brand-ivory text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
 									Calm by design
 								</div>
 							</div>
@@ -218,15 +226,15 @@ export default function AboutPageContent() {
 										delay={120 + index * 80}
 										asChild
 									>
-										<div className="grid gap-5 rounded-[28px] border border-brand-border-soft bg-[linear-gradient(180deg,#fffaf1_0%,#f8f4ec_100%)] p-5 shadow-[0_10px_24px_var(--shadow-black-02)] sm:grid-cols-[auto_1fr] sm:items-start sm:p-6">
-											<div className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-border-highlight bg-brand-paper text-sm font-medium text-brand-gold">
+										<div className="border-brand-border-soft grid gap-5 rounded-[28px] border bg-[linear-gradient(180deg,#fffaf1_0%,#f8f4ec_100%)] p-5 shadow-[0_10px_24px_var(--shadow-black-02)] sm:grid-cols-[auto_1fr] sm:items-start sm:p-6">
+											<div className="border-brand-border-highlight bg-brand-paper text-brand-gold flex h-12 w-12 items-center justify-center rounded-full border text-sm font-medium">
 												0{index + 1}
 											</div>
 											<div>
-												<h3 className="text-2xl leading-tight font-light text-brand-ink capitalize">
+												<h3 className="text-brand-ink text-2xl leading-tight font-light capitalize">
 													{value.title}
 												</h3>
-												<p className="mt-3 max-w-3xl text-sm leading-7 text-brand-copy">
+												<p className="text-brand-copy mt-3 max-w-3xl text-sm leading-7">
 													{value.description}
 												</p>
 											</div>
@@ -242,9 +250,11 @@ export default function AboutPageContent() {
 			<section className="bg-[linear-gradient(180deg,#f6f4ef_0%,#fcfaf6_100%)] px-4 py-16 sm:px-6 lg:px-10 lg:py-22">
 				<div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center">
 					<RevealWrapper direction="right" asChild>
-						<div className="rounded-[34px] border border-brand-border-soft bg-brand-paper p-7 shadow-[0_16px_42px_var(--shadow-black-03)] sm:p-8">
+						<div className="border-brand-border-soft bg-brand-paper rounded-[34px] border p-7 shadow-[0_16px_42px_var(--shadow-black-03)] sm:p-8">
 							<p className="section-eyebrow text-brand-gold">How We Build</p>
-							<h2 className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl`}>
+							<h2
+								className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl`}
+							>
 								A simple process, elevated by detail.
 							</h2>
 
@@ -256,15 +266,15 @@ export default function AboutPageContent() {
 										delay={120 + index * 80}
 										asChild
 									>
-										<div className="flex gap-4 rounded-[26px] border border-brand-border-soft bg-brand-ivory p-5">
-											<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-brand-border-highlight bg-brand-paper text-sm font-medium text-brand-gold">
+										<div className="border-brand-border-soft bg-brand-ivory flex gap-4 rounded-[26px] border p-5">
+											<div className="border-brand-border-highlight bg-brand-paper text-brand-gold flex h-12 w-12 shrink-0 items-center justify-center rounded-full border text-sm font-medium">
 												{item.step}
 											</div>
 											<div>
-												<h3 className="text-xl font-light text-brand-ink">
+												<h3 className="text-brand-ink text-xl font-light">
 													{item.title}
 												</h3>
-												<p className="mt-2 text-sm leading-7 text-brand-copy">
+												<p className="text-brand-copy mt-2 text-sm leading-7">
 													{item.description}
 												</p>
 											</div>
@@ -276,9 +286,9 @@ export default function AboutPageContent() {
 					</RevealWrapper>
 
 					<RevealWrapper direction="left" delay={90} asChild>
-						<div className="relative overflow-hidden rounded-[36px] border border-brand-border-soft bg-brand-paper shadow-[0_20px_55px_var(--shadow-black-05)]">
+						<div className="border-brand-border-soft bg-brand-paper relative overflow-hidden rounded-[36px] border shadow-[0_20px_55px_var(--shadow-black-05)]">
 							<div className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(183,157,103,0.16),transparent)]" />
-							<div className="relative min-h-[500px]">
+							<div className="relative min-h-125">
 								<Image
 									src="/images/slide/slide5.png"
 									alt="Ayurra Herbal botanical visual"
@@ -286,8 +296,10 @@ export default function AboutPageContent() {
 									className="object-cover"
 								/>
 							</div>
-							<div className="absolute right-5 bottom-5 left-5 rounded-[26px] border border-white/30 bg-[#26231f]/72 p-5 text-brand-ivory backdrop-blur-md">
-								<p className="section-eyebrow text-brand-copy-cream">Brand Philosophy</p>
+							<div className="text-brand-ivory absolute right-5 bottom-5 left-5 rounded-[26px] border border-white/30 bg-[#26231f]/72 p-5 backdrop-blur-md">
+								<p className="section-eyebrow text-brand-copy-cream">
+									Brand Philosophy
+								</p>
 								<p className="mt-3 text-lg leading-8 font-light">
 									We design for people who want wellness to feel grounded,
 									beautiful, and quietly premium.
@@ -298,13 +310,17 @@ export default function AboutPageContent() {
 				</div>
 			</section>
 
-			<section className="relative overflow-hidden bg-brand-ivory px-4 py-16 sm:px-6 lg:px-10 lg:py-22">
-				<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(183,157,103,0.14),_transparent_45%)]" />
+			<section className="bg-brand-ivory relative overflow-hidden px-4 py-16 sm:px-6 lg:px-10 lg:py-22">
+				<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(183,157,103,0.14),transparent_45%)]" />
 
-				<div className="relative mx-auto max-w-5xl rounded-[36px] border border-brand-border-soft bg-[linear-gradient(180deg,#fffaf1_0%,#f7f1e7_100%)] p-8 text-center shadow-[0_22px_60px_var(--shadow-black-05)] sm:p-12">
+				<div className="border-brand-border-soft relative mx-auto max-w-5xl rounded-[36px] border bg-[linear-gradient(180deg,#fffaf1_0%,#f7f1e7_100%)] p-8 text-center shadow-[0_22px_60px_var(--shadow-black-05)] sm:p-12">
 					<RevealWrapper direction="up">
-						<p className="section-eyebrow text-brand-gold">A Better Daily Ritual</p>
-						<h2 className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl lg:text-5xl`}>
+						<p className="section-eyebrow text-brand-gold">
+							A Better Daily Ritual
+						</p>
+						<h2
+							className={`${epilogue.className} text-brand-ink mt-3 text-3xl leading-tight font-light tracking-tight sm:text-4xl lg:text-5xl`}
+						>
 							Explore the collection shaped by this philosophy.
 						</h2>
 						<p className="section-body text-brand-copy mx-auto mt-5 max-w-2xl">
@@ -315,13 +331,13 @@ export default function AboutPageContent() {
 						<div className="mt-8 flex flex-wrap justify-center gap-3">
 							<Link
 								href="/shop"
-								className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-gold bg-brand-gold px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300 hover:border-brand-gold-hover hover:bg-brand-gold-hover"
+								className="border-brand-gold bg-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300"
 							>
 								Visit the Shop
 							</Link>
 							<Link
 								href="/contact"
-								className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-border-button bg-brand-paper/90 px-7 py-3 text-[11px] tracking-[0.24em] text-brand-copy-ui uppercase transition duration-300 hover:border-brand-gold hover:text-brand-gold"
+								className="border-brand-border-button bg-brand-paper/90 text-brand-copy-ui hover:border-brand-gold hover:text-brand-gold inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] uppercase transition duration-300"
 							>
 								Contact Us
 							</Link>

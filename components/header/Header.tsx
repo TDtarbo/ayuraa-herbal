@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiShoppingCart, CiMenuFries } from "react-icons/ci";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
-import { Ephesis, Epilogue } from "next/font/google";
+import { Epilogue } from "next/font/google";
 import { useCart } from "@/components/providers/CartProvider";
+import Image from "next/image";
+import { socialLinks } from "@/lib/socialLinks";
 
-const ephesis = Ephesis({ subsets: ["latin"], weight: "400" });
 const epilogue = Epilogue({
 	subsets: ["latin"],
 	weight: ["400", "500", "600"],
@@ -21,10 +23,20 @@ const navLinks = [
 	{ name: "Contact", href: "/contact" },
 ];
 
+const socialIcons = {
+	Instagram: FaInstagram,
+	Facebook: FaFacebookF,
+	TikTok: FaTiktok,
+} as const;
+
+const shellPadding = "px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20";
+
 export default function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 	const pathname = usePathname();
 	const { itemCount } = useCart();
+	const lastScrollY = useRef(0);
 
 	useEffect(() => {
 		if (mobileMenuOpen) {
@@ -38,6 +50,31 @@ export default function Header() {
 		};
 	}, [mobileMenuOpen]);
 
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollY = window.scrollY;
+
+			if (mobileMenuOpen || currentScrollY < 24) {
+				setIsHeaderVisible(true);
+				lastScrollY.current = currentScrollY;
+				return;
+			}
+
+			if (currentScrollY > lastScrollY.current) {
+				setIsHeaderVisible(false);
+			} else if (currentScrollY < lastScrollY.current) {
+				setIsHeaderVisible(true);
+			}
+
+			lastScrollY.current = currentScrollY;
+		};
+
+		lastScrollY.current = window.scrollY;
+		window.addEventListener("scroll", handleScroll, { passive: true });
+
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [mobileMenuOpen]);
+
 	const isActiveLink = (href: string) => {
 		if (href === "/") return pathname === "/";
 		if (href === "/shop") {
@@ -49,20 +86,41 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="relative z-40 w-full border-b border-[#e7dfd2] bg-[#fcfaf6]/95 backdrop-blur-sm">
-				<div className="mx-auto flex h-[15vh] max-w-475 items-center justify-between px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20">
+			<header
+				className={`fixed top-0 right-0 left-0 z-40 w-full border-b border-[#e7dfd2] bg-[#fcfaf6]/95 backdrop-blur-sm transition-transform duration-300 ${
+					isHeaderVisible ? "translate-y-0" : "-translate-y-full"
+				}`}
+			>
+				<div
+					className={`mx-auto flex h-[15vh] items-center justify-between ${shellPadding}`}
+				>
 					{/* Left: Brand */}
-					<div className="flex min-w-0 items-center">
-						<Link href="/" className="group inline-flex flex-col leading-none">
-							<span
-								className={`${ephesis.className} text-[2rem] text-[#b79d67] transition duration-300 group-hover:text-[#a88d56] sm:text-[2.3rem]`}
-							>
-								Ayurra Herbal
-							</span>
-							<span
-								className={`${epilogue.className} mt-1 text-[10px] tracking-[0.32em] text-[#8b8478] uppercase`}
-							>
-								Pure Herbal Wellness
+					<div className="flex w-100 items-center">
+						<Link
+							href="/"
+							className="group inline-flex items-center leading-none"
+						>
+							<Image
+								src="/logos/logo_icon_v2.svg"
+								alt="Ayurra Herbal Logo"
+								width={56}
+								height={56}
+								className="hidden h-auto w-13.75 xl:block"
+							/>
+
+							<span className="inline-flex flex-col leading-none xl:ml-4">
+								<Image
+									src="/logos/logo_v3.svg"
+									alt="Ayurra Herbal Logo"
+									width={20}
+									height={20}
+									className="mb-1 h-auto w-34 sm:w-40 md:w-48 xl:w-55"
+								/>
+								<span
+									className={`${epilogue.className} mt-1 text-[8px] tracking-[0.24em] text-[#8b8478] uppercase sm:text-[9px] md:text-[10px] md:tracking-[0.28em] xl:text-[11px] xl:tracking-[0.32em]`}
+								>
+									Your trusted herbal partner
+								</span>
 							</span>
 						</Link>
 					</div>
@@ -86,8 +144,14 @@ export default function Header() {
 					</nav>
 
 					{/* Right: Actions */}
-					<div className="flex items-center gap-3 sm:gap-4">
-					
+					<div className="bg flex w-100 items-center justify-end gap-3 sm:gap-4">
+						<Link
+							href="/products"
+							className={`${epilogue.className} hidden min-h-11.5 items-center justify-center rounded-full border border-[#d8d0c2] bg-[#fffaf1] px-6 py-3 text-[10px] tracking-[0.24em] text-[#4f493f] uppercase transition duration-300 hover:border-[#b79d67] hover:text-[#b79d67] lg:inline-flex`}
+						>
+							Explore Products
+						</Link>
+
 						<Link
 							href="/cart"
 							className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#ddd3c4] bg-[#fffaf1] text-[#26231f] transition duration-300 hover:border-[#b79d67] hover:text-[#b79d67]"
@@ -111,10 +175,11 @@ export default function Header() {
 					</div>
 				</div>
 			</header>
+			<div aria-hidden="true" className="h-[15vh]" />
 
 			{/* Full Screen Mobile Menu Overlay - OUTSIDE RevealWrapper */}
 			<div
-				className={`fixed inset-0 z-9999 h-screen w-screen lg:hidden ${
+				className={`fixed inset-0 z-9999 h-screen w-screen px-3 pt-6 lg:hidden ${
 					mobileMenuOpen
 						? "pointer-events-auto opacity-100"
 						: "pointer-events-none opacity-0"
@@ -127,20 +192,26 @@ export default function Header() {
 				/>
 
 				{/* Content */}
-				<div className="relative flex h-full w-full flex-col px-6 pt-6 pb-8 sm:px-8">
+				<div
+					className={`relative flex h-full w-full flex-col pt-6 pb-8 ${shellPadding}`}
+				>
 					{/* Top */}
-					<div className="flex items-start justify-between border-b border-[#e7dfd2] pb-5">
-						<div className="flex flex-col leading-none">
-							<span
-								className={`${ephesis.className} text-[2.2rem] text-[#b79d67]`}
-							>
-								Ayurra Herbal
-							</span>
-							<span
-								className={`${epilogue.className} mt-1 text-[10px] tracking-[0.32em] text-[#8b8478] uppercase`}
-							>
-								Pure Herbal Wellness
-							</span>
+					<div className="flex items-start justify-between gap-4 border-b border-[#e7dfd2] pb-5">
+						<div className="flex min-w-0 flex-1 flex-col">
+							<div>
+								<Image
+									src="/logos/logo_v3.svg"
+									alt="Ayurra Herbal Logo"
+									width={240}
+									height={80}
+									className="h-auto w-40 sm:w-44"
+								/>
+								<p
+									className={`${epilogue.className} mt-2 text-[10px] tracking-[0.24em] text-[#8b8478] uppercase`}
+								>
+									Your trusted herbal partner
+								</p>
+							</div>
 						</div>
 
 						<button
@@ -153,9 +224,9 @@ export default function Header() {
 					</div>
 
 					{/* Middle */}
-					<div className="flex flex-1 items-center">
+					<div className="mt-12 flex flex-1 items-start">
 						<div className="w-full">
-							<div className="mb-6 flex items-center gap-3">
+							<div className="mb-5 flex items-center gap-3">
 								<span className="h-px w-10 bg-[#b79d67]" />
 								<p
 									className={`${epilogue.className} text-[10px] tracking-[0.28em] text-[#b79d67] uppercase`}
@@ -164,20 +235,16 @@ export default function Header() {
 								</p>
 							</div>
 
-							<nav className="flex flex-col">
-								{navLinks.map((link, index) => (
+							<nav className="flex w-full flex-col">
+								{navLinks.map((link) => (
 									<Link
 										key={link.name}
 										href={link.href}
 										onClick={() => setMobileMenuOpen(false)}
-										className={`${epilogue.className} ${
-											index !== navLinks.length - 1
-												? "border-b border-[#ece3d6]"
-												: ""
-										} py-5 text-[1.15rem] tracking-[0.18em] uppercase transition duration-300 ${
+										className={`${epilogue.className} border-b border-[#ece3d6] py-4 text-center text-[1rem] tracking-[0.18em] uppercase transition duration-300 last:border-b-0 ${
 											isActiveLink(link.href)
-												? "pl-2 text-[#b79d67]"
-												: "text-[#26231f] hover:pl-2 hover:text-[#b79d67]"
+												? "text-[#b79d67]"
+												: "text-[#26231f] hover:text-[#b79d67]"
 										}`}
 										aria-current={isActiveLink(link.href) ? "page" : undefined}
 									>
@@ -190,7 +257,7 @@ export default function Header() {
 
 					{/* Bottom */}
 					<div className="border-t border-[#e7dfd2] pt-6">
-						<div className="flex flex-col gap-3">
+						<div className="grid grid-cols-2 gap-3">
 							<Link
 								href="/shop"
 								onClick={() => setMobileMenuOpen(false)}
@@ -206,6 +273,27 @@ export default function Header() {
 							>
 								View Cart
 							</Link>
+						</div>
+
+						<div className="mt-5 border-t border-[#ece3d6] pt-4">
+							<div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+								{socialLinks.map((link) => {
+									const Icon = socialIcons[link.label];
+
+									return (
+										<a
+											key={link.label}
+											href={link.href}
+											target="_blank"
+											rel="noreferrer"
+											className={`${epilogue.className} inline-flex items-center gap-2 text-[10px] tracking-[0.2em] text-[#6b655b] uppercase transition duration-300 hover:text-[#b79d67]`}
+										>
+											<Icon className="h-3.5 w-3.5" />
+											<span>{link.label}</span>
+										</a>
+									);
+								})}
+							</div>
 						</div>
 					</div>
 				</div>

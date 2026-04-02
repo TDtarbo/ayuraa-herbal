@@ -7,12 +7,13 @@ export type Product = {
 	rating: number;
 	reviews: number;
 	image: string;
+	images?: string[];
 	featured?: boolean;
 	description: string;
 	longDescription: string;
 	details: string[];
 	benefits: string[];
-	ritual: string;
+	ingredients: string[];
 	format: string;
 	size: string;
 };
@@ -27,6 +28,7 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 128,
 		image: "/images/hero3.png",
+		images: ["/images/hero3.png", "/images/hero4.png", "/images/hero5.png"],
 		featured: true,
 		description:
 			"A natural herbal supplement traditionally used to support vitality, balance, and everyday wellness.",
@@ -42,7 +44,7 @@ export const products: Product[] = [
 			"Easy capsule format for morning or evening routines",
 			"Balanced, minimal formulation with a refined feel",
 		],
-		ritual: "Best enjoyed as part of a steady daily ritual.",
+		ingredients: ["Ashwagandha extract", "Vegetable capsule"],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -55,6 +57,7 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 94,
 		image: "/images/hero2.png",
+		images: ["/images/hero2.png", "/images/hero6.png", "/images/hero7.png"],
 		description:
 			"A clean herbal staple traditionally chosen for its purifying and skin-supportive qualities.",
 		longDescription:
@@ -69,7 +72,7 @@ export const products: Product[] = [
 			"Easy to pair with broader wellness routines",
 			"Presented in a clean, shelf-ready format",
 		],
-		ritual: "A thoughtful addition to disciplined morning wellness habits.",
+		ingredients: ["Neem leaf extract", "Vegetable capsule"],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -82,6 +85,13 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 88,
 		image: "/images/hero1.png",
+		images: [
+			"/images/hero1.png",
+			"/images/hero8.png",
+			"/images/hero9.png",
+			"/images/hero9.png",
+			"/images/hero9.png",
+		],
 		description:
 			"A composed herbal blend created for customers building a more intentional everyday routine.",
 		longDescription:
@@ -96,7 +106,12 @@ export const products: Product[] = [
 			"Designed for repeatable daily use",
 			"Simple enough to fit into existing habits",
 		],
-		ritual: "Works well in structured day-start rituals.",
+		ingredients: [
+			"Bitter melon extract",
+			"Gymnema extract",
+			"Fenugreek extract",
+			"Vegetable capsule",
+		],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -109,6 +124,7 @@ export const products: Product[] = [
 		rating: 5,
 		reviews: 116,
 		image: "/images/hero3.png",
+		images: ["/images/hero3.png", "/images/hero10.png", "/images/hero11.png"],
 		description:
 			"A botanical support blend for customers who want to keep wellness rituals steady through the week.",
 		longDescription:
@@ -123,7 +139,12 @@ export const products: Product[] = [
 			"Polished packaging suited for modern wellness shelves",
 			"Easy to stack with other herbal essentials",
 		],
-		ritual: "A steady option for ongoing everyday care.",
+		ingredients: [
+			"Elderberry extract",
+			"Turmeric extract",
+			"Ginger extract",
+			"Vegetable capsule",
+		],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -136,6 +157,7 @@ export const products: Product[] = [
 		rating: 5,
 		reviews: 143,
 		image: "/images/hero20.png",
+		images: ["/images/hero20.png", "/images/hero22.png", "/images/hero23.png"],
 		description:
 			"A bright herbal pairing for customers who like warm, familiar ingredients in a modern routine.",
 		longDescription:
@@ -150,7 +172,12 @@ export const products: Product[] = [
 			"A supportive addition to thoughtful wellness habits",
 			"Comforting profile with premium presentation",
 		],
-		ritual: "Especially suited to grounding morning or evening rituals.",
+		ingredients: [
+			"Turmeric extract",
+			"Ginger extract",
+			"Black pepper extract",
+			"Vegetable capsule",
+		],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -163,6 +190,7 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 72,
 		image: "/images/hero21.png",
+		images: ["/images/hero21.png", "/images/hero14.png", "/images/hero15.png"],
 		description:
 			"A simple herbal essential chosen by customers who appreciate uncomplicated daily support.",
 		longDescription:
@@ -177,7 +205,7 @@ export const products: Product[] = [
 			"Designed for lightweight everyday routines",
 			"Neat presentation for organized wellness shelves",
 		],
-		ritual: "Ideal for customers who prefer clean, uncomplicated rituals.",
+		ingredients: ["Moringa leaf powder", "Vegetable capsule"],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -190,6 +218,7 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 72,
 		image: "/images/hero21.png",
+		images: ["/images/hero21.png", "/images/hero14.png", "/images/hero15.png"],
 		description:
 			"A simple herbal essential chosen by customers who appreciate uncomplicated daily support.",
 		longDescription:
@@ -204,7 +233,7 @@ export const products: Product[] = [
 			"Designed for lightweight everyday routines",
 			"Neat presentation for organized wellness shelves",
 		],
-		ritual: "Ideal for customers who prefer clean, uncomplicated rituals.",
+		ingredients: ["Moringa leaf powder", "Vegetable capsule"],
 		format: "Capsules",
 		size: "60 count",
 	},
@@ -217,6 +246,7 @@ export const products: Product[] = [
 		rating: 4,
 		reviews: 72,
 		image: "/images/hero21.png",
+		images: ["/images/hero21.png", "/images/hero14.png", "/images/hero15.png"],
 		description:
 			"A simple herbal essential chosen by customers who appreciate uncomplicated daily support.",
 		longDescription:
@@ -231,7 +261,7 @@ export const products: Product[] = [
 			"Designed for lightweight everyday routines",
 			"Neat presentation for organized wellness shelves",
 		],
-		ritual: "Ideal for customers who prefer clean, uncomplicated rituals.",
+		ingredients: ["Moringa leaf powder", "Vegetable capsule"],
 		format: "Capsules",
 		size: "60 count",
 	},

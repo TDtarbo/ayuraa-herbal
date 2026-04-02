@@ -5,8 +5,10 @@ import { notFound } from "next/navigation";
 import { Epilogue, Ephesis } from "next/font/google";
 import SiteFooter from "@/components/footer/SiteFooter";
 import Header from "@/components/header/Header";
+import ProductImageGallery from "@/components/sections/products/ProductImageGallery";
 import ProductPurchaseControls from "@/components/sections/products/ProductPurchaseControls";
 import RevealWrapper from "@/components/util/RevealWrapper";
+import { formatLkr } from "@/lib/currency";
 import { getProductBySlug, products } from "@/lib/products";
 
 const epilogue = Epilogue({
@@ -51,6 +53,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 		notFound();
 	}
 
+	const galleryImages =
+		product.images && product.images.length > 0
+			? product.images
+			: [product.image];
+
 	const relatedProducts = products
 		.filter((item) => item.slug !== product.slug)
 		.slice(0, 3);
@@ -72,19 +79,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
 				<div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[0.95fr_1.05fr] lg:px-10 lg:py-24">
 					<RevealWrapper direction="right" asChild>
-						<div className="border-brand-border-soft bg-brand-paper relative z-10 rounded-4xl border p-6 shadow-[0_18px_50px_var(--shadow-black-05)] sm:p-8">
-							<div className="bg-brand-ivory rounded-[28px] p-8">
-								<div className="relative flex min-h-96 items-center justify-center">
-									<Image
-										src={product.image}
-										alt={product.name}
-										width={520}
-										height={520}
-										className="h-80 w-auto object-contain sm:h-96"
-										priority
-									/>
-								</div>
-							</div>
+						<div className="relative z-10 h-full">
+							<ProductImageGallery
+								name={product.name}
+								images={galleryImages}
+							/>
 						</div>
 					</RevealWrapper>
 
@@ -115,7 +114,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 								<div className="mt-8 flex flex-wrap items-center gap-4">
 									<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-5 py-3 text-sm shadow-[0_10px_25px_var(--shadow-black-03)]">
 										<span className="text-brand-ink font-medium">
-											${product.price.toFixed(2)}
+											{formatLkr(product.price)}
 										</span>
 									</div>
 									<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-5 py-3 text-sm shadow-[0_10px_25px_var(--shadow-black-03)]">
@@ -151,10 +150,10 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 										{product.size}
 									</span>
 								</div>
-								<div className="flex items-center justify-between gap-4 text-sm">
-									<span className="text-brand-copy">Ritual</span>
-									<span className="text-brand-ink max-w-56 text-right font-medium">
-										{product.ritual}
+								<div className="flex items-start justify-between gap-4 text-sm">
+									<span className="text-brand-copy">Ingredients</span>
+									<span className="text-brand-ink max-w-72 text-right font-medium">
+										{product.ingredients.join(", ")}
 									</span>
 								</div>
 							</div>
@@ -179,22 +178,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 										</div>
 									</RevealWrapper>
 								))}
-							</div>
-
-							<div className="border-brand-border-soft mt-8 border-t pt-8">
-								<p className="section-eyebrow text-brand-copy-label">
-									Product Details
-								</p>
-								<div className="mt-4 flex flex-wrap gap-3">
-									{product.details.map((detail) => (
-										<span
-											key={detail}
-											className="border-brand-border-highlight bg-brand-ivory text-brand-copy-ui rounded-full border px-4 py-2 text-[11px] tracking-[0.22em] uppercase"
-										>
-											{detail}
-										</span>
-									))}
-								</div>
 							</div>
 						</div>
 					</RevealWrapper>
@@ -248,7 +231,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 											{item.description}
 										</p>
 										<p className="text-brand-ink mt-auto pt-6 text-xl font-medium">
-											${item.price.toFixed(2)}
+											{formatLkr(item.price)}
 										</p>
 									</article>
 								</Link>

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { useCart } from "@/components/providers/CartProvider";
 import ActionToast from "@/components/ui/ActionToast";
+import { formatLkr } from "@/lib/currency";
 import type { Product } from "@/lib/products";
 
 type ProductPurchaseControlsProps = {
@@ -67,7 +68,7 @@ export default function ProductPurchaseControls({
 					<div className="text-left sm:text-right">
 						<p className="section-eyebrow text-brand-copy-label">Estimated Total</p>
 						<p className="mt-2 text-3xl font-medium text-brand-ink">
-							${total.toFixed(2)}
+							{formatLkr(total)}
 						</p>
 					</div>
 				</div>

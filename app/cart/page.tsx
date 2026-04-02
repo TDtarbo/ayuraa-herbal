@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function CartPage() {
 	return (
 		<div
-			className={`bg-background relative m-0 flex min-h-screen w-full flex-col overflow-hidden bg-white/35 p-0 ${epilogueRegular.className}`}
+			className={`relative m-0 flex min-h-screen w-full flex-col overflow-hidden bg-white/35 p-0 ${epilogueRegular.className}`}
 		>
 			<Header />
 			<CartPageContent />

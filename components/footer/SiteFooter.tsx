@@ -1,6 +1,59 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
+import { socialLinks } from "@/lib/socialLinks";
+
+const socialIcons = {
+	Instagram: FaInstagram,
+	Facebook: FaFacebookF,
+	TikTok: FaTiktok,
+} as const;
 
 export default function SiteFooter() {
+	const [email, setEmail] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		setErrorMessage("");
+		setSuccessMessage("");
+		setIsSubmitting(true);
+
+		try {
+			const response = await fetch("/api/newsletter", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email }),
+			});
+
+			const result = (await response.json()) as {
+				error?: string;
+				success?: boolean;
+			};
+
+			if (!response.ok || !result.success) {
+				throw new Error(result.error || "Something went wrong.");
+			}
+
+			setSuccessMessage("You have been subscribed successfully.");
+			setEmail("");
+		} catch (error) {
+			setErrorMessage(
+				error instanceof Error
+					? error.message
+					: "Unable to subscribe right now.",
+			);
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<footer className="bg-[#1f1f1b] text-[#eae5da]">
 			<div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-10">
@@ -13,6 +66,29 @@ export default function SiteFooter() {
 							Premium herbal wellness products crafted with care, backed by
 							trusted standards, and designed for everyday balance.
 						</p>
+						<div className="mt-6">
+							<h4 className="text-sm font-semibold tracking-[0.2em] text-[#b79b57] uppercase">
+								Follow Us
+							</h4>
+							<div className="mt-4 flex flex-col gap-3">
+								{socialLinks.map((link) => {
+									const Icon = socialIcons[link.label];
+
+									return (
+										<a
+											key={link.label}
+											href={link.href}
+											target="_blank"
+											rel="noreferrer"
+											className="inline-flex items-center gap-3 text-sm text-[#d8d1c5] transition hover:text-white"
+										>
+											<Icon className="h-4 w-4" />
+											<span>{link.label}</span>
+										</a>
+									);
+								})}
+							</div>
+						</div>
 					</div>
 
 					<div>
@@ -63,19 +139,34 @@ export default function SiteFooter() {
 							Subscribe for wellness tips, herbal insights, and product updates.
 						</p>
 
-						<form className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+						<form
+							className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row"
+							onSubmit={handleSubmit}
+						>
 							<input
 								type="email"
+								required
+								value={email}
+								onChange={(event) => setEmail(event.target.value)}
 								placeholder="Your email address"
 								className="w-full rounded-full border border-[#5f5a52] bg-transparent px-4 py-3 text-sm text-white outline-none placeholder:text-[#9f988b] focus:border-[#b79b57]"
 							/>
 							<button
 								type="submit"
-								className="rounded-full bg-[#b79b57] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+								disabled={isSubmitting}
+								className="rounded-full bg-[#b79b57] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
 							>
-								Subscribe
+								{isSubmitting ? "Subscribing..." : "Subscribe"}
 							</button>
 						</form>
+
+						{errorMessage && (
+							<p className="mt-3 text-sm text-[#e6b9b3]">{errorMessage}</p>
+						)}
+
+						{successMessage && (
+							<p className="mt-3 text-sm text-[#c9dfbc]">{successMessage}</p>
+						)}
 					</div>
 				</div>
 

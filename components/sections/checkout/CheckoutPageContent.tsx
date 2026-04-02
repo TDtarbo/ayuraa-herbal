@@ -5,6 +5,7 @@ import { Epilogue } from "next/font/google";
 import { useMemo, useState } from "react";
 import { useCart } from "@/components/providers/CartProvider";
 import RevealWrapper from "@/components/util/RevealWrapper";
+import { formatLkr } from "@/lib/currency";
 
 const epilogue = Epilogue({
 	subsets: ["latin"],
@@ -15,7 +16,8 @@ type FormState = {
 	customerName: string;
 	phoneNumber: string;
 	address: string;
-	email: string;
+	city: string;
+	paymentMethod: "Cash on Delivery";
 	notes: string;
 };
 
@@ -23,7 +25,8 @@ const initialFormState: FormState = {
 	customerName: "",
 	phoneNumber: "",
 	address: "",
-	email: "",
+	city: "",
+	paymentMethod: "Cash on Delivery",
 	notes: "",
 };
 
@@ -186,7 +189,7 @@ export default function CheckoutPageContent() {
 							items
 						</div>
 						<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-5 py-3 text-sm">
-							Total ${total.toFixed(2)}
+							Total {formatLkr(total)}
 						</div>
 					</RevealWrapper>
 				</div>
@@ -223,14 +226,6 @@ export default function CheckoutPageContent() {
 									/>
 								</div>
 
-								<input
-									type="email"
-									value={formState.email}
-									onChange={handleChange("email")}
-									placeholder="Email address (optional)"
-									className="border-brand-border-button bg-brand-ivory text-brand-ink placeholder:text-brand-copy-placeholder focus:border-brand-gold h-13 w-full rounded-[20px] border px-5 text-sm transition duration-300 outline-none"
-								/>
-
 								<textarea
 									required
 									value={formState.address}
@@ -239,6 +234,74 @@ export default function CheckoutPageContent() {
 									rows={5}
 									className="border-brand-border-button bg-brand-ivory text-brand-ink placeholder:text-brand-copy-placeholder focus:border-brand-gold w-full rounded-3xl border px-5 py-4 text-sm transition duration-300 outline-none"
 								/>
+
+								<input
+									type="text"
+									required
+									value={formState.city}
+									onChange={handleChange("city")}
+									placeholder="City"
+									className="border-brand-border-button bg-brand-ivory text-brand-ink placeholder:text-brand-copy-placeholder focus:border-brand-gold h-13 w-full rounded-[20px] border px-5 text-sm transition duration-300 outline-none"
+								/>
+
+								<div className="border-brand-border-soft bg-brand-ivory rounded-3xl border px-5 py-5">
+									<div className="flex flex-wrap items-center justify-between gap-3">
+										<div>
+											<p className="text-brand-ink text-sm font-medium">
+												Payment Method
+											</p>
+											<p className="text-brand-copy mt-1 text-sm">
+												Choose how the customer will complete payment.
+											</p>
+										</div>
+									</div>
+
+									<div className="mt-4 grid gap-3 sm:grid-cols-2">
+										<label className="border-brand-gold bg-brand-paper rounded-[22px] border px-4 py-4">
+											<div className="flex items-start gap-3">
+												<input
+													type="radio"
+													name="paymentMethod"
+													value="Cash on Delivery"
+													checked={formState.paymentMethod === "Cash on Delivery"}
+													onChange={handleChange("paymentMethod")}
+													className="accent-brand-gold mt-1 h-4 w-4"
+												/>
+												<div>
+													<p className="text-brand-ink text-sm font-medium">
+														Cash on Delivery
+													</p>
+													<p className="text-brand-copy mt-1 text-sm leading-6">
+														Collect payment when the order arrives.
+													</p>
+												</div>
+											</div>
+										</label>
+
+										<div className="border-brand-border-button bg-brand-paper/70 rounded-[22px] border px-4 py-4 opacity-70">
+											<div className="flex items-start gap-3">
+												<input
+													type="radio"
+													name="paymentMethod"
+													value="Card Payment"
+													disabled
+													checked={false}
+													readOnly
+													className="accent-brand-gold mt-1 h-4 w-4 cursor-not-allowed"
+												/>
+												<div>
+													<p className="text-brand-ink text-sm font-medium">
+														Card Payment (Coming Soon)
+													</p>
+													<p className="text-brand-copy mt-1 text-sm leading-6">
+														Online card payments are not available yet. This
+														option is coming soon.
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 
 								<textarea
 									value={formState.notes}
@@ -288,11 +351,11 @@ export default function CheckoutPageContent() {
 													{item.name}
 												</h3>
 												<p className="text-brand-copy mt-1 text-sm">
-													{item.quantity} x ${item.price.toFixed(2)}
+													{item.quantity} x {formatLkr(item.price)}
 												</p>
 											</div>
 											<p className="text-brand-ink text-base font-medium">
-												${(item.price * item.quantity).toFixed(2)}
+												{formatLkr(item.price * item.quantity)}
 											</p>
 										</div>
 									</div>
@@ -303,7 +366,7 @@ export default function CheckoutPageContent() {
 								<div className="text-brand-copy flex items-center justify-between text-sm">
 									<span>Subtotal</span>
 									<span className="text-brand-ink font-medium">
-										${subtotal.toFixed(2)}
+										{formatLkr(subtotal)}
 									</span>
 								</div>
 								<div className="text-brand-copy flex items-center justify-between text-sm">
@@ -311,7 +374,7 @@ export default function CheckoutPageContent() {
 									<span className="text-brand-ink font-medium">
 										{shipping === 0
 											? "Complimentary"
-											: `$${shipping.toFixed(2)}`}
+											: formatLkr(shipping)}
 									</span>
 								</div>
 							</div>
@@ -323,7 +386,7 @@ export default function CheckoutPageContent() {
 											Total
 										</p>
 										<p className="text-brand-ink mt-2 text-3xl font-medium">
-											${total.toFixed(2)}
+											{formatLkr(total)}
 										</p>
 									</div>
 									<div className="border-brand-border-highlight bg-brand-ivory text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
@@ -331,9 +394,9 @@ export default function CheckoutPageContent() {
 									</div>
 								</div>
 								<p className="text-brand-copy mt-4 text-sm leading-7">
-									For now, this checkout saves the order details into a local
-									text file so you can process it manually before connecting
-									Google Sheets later.
+									Your order details will be saved into Google Sheets so you can
+									process them manually. Right now, orders are placed with cash
+									on delivery while card payment is being prepared.
 								</p>
 							</div>
 						</aside>

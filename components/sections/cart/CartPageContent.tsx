@@ -8,6 +8,7 @@ import { CiCircleMinus, CiCirclePlus, CiTrash } from "react-icons/ci";
 import { useCart } from "@/components/providers/CartProvider";
 import ConfirmationDialog from "@/components/ui/ConfirmationDialog";
 import RevealWrapper from "@/components/util/RevealWrapper";
+import { formatLkr } from "@/lib/currency";
 
 const epilogue = Epilogue({
 	subsets: ["latin"],
@@ -102,7 +103,7 @@ export default function CartPageContent() {
 						<div className="border-brand-border-highlight bg-brand-paper text-brand-copy-ui rounded-full border px-5 py-3 text-sm">
 							{subtotal >= 45
 								? "Free shipping unlocked"
-								: "Free shipping over $45"}
+								: `Free shipping over ${formatLkr(45)}`}
 						</div>
 					</RevealWrapper>
 				</div>
@@ -155,7 +156,7 @@ export default function CartPageContent() {
 														Line Total
 													</p>
 													<p className="text-brand-ink mt-2 text-2xl font-medium">
-														${(item.price * item.quantity).toFixed(2)}
+														{formatLkr(item.price * item.quantity)}
 													</p>
 												</div>
 											</div>
@@ -220,15 +221,13 @@ export default function CartPageContent() {
 									<div className="text-brand-copy flex items-center justify-between text-sm">
 										<span>Subtotal</span>
 										<span className="text-brand-ink font-medium">
-											${subtotal.toFixed(2)}
+											{formatLkr(subtotal)}
 										</span>
 									</div>
 									<div className="text-brand-copy flex items-center justify-between text-sm">
 										<span>Delivery</span>
 										<span className="text-brand-ink font-medium">
-											{shipping === 0
-												? "Complimentary"
-												: `$${shipping.toFixed(2)}`}
+											{shipping === 0 ? "Complimentary" : formatLkr(shipping)}
 										</span>
 									</div>
 								</div>
@@ -240,7 +239,7 @@ export default function CartPageContent() {
 												Total
 											</p>
 											<p className="text-brand-ink mt-2 text-3xl font-medium">
-												${total.toFixed(2)}
+												{formatLkr(total)}
 											</p>
 										</div>
 										<div className="border-brand-border-highlight bg-brand-ivory text-brand-copy-ui rounded-full border px-4 py-2 text-sm">
@@ -252,7 +251,7 @@ export default function CartPageContent() {
 										href="/checkout"
 										className="border-brand-gold bg-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300"
 									>
-										Proceed to Checkout
+										Place Order
 									</Link>
 
 									<Link

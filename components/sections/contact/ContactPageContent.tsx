@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Epilogue } from "next/font/google";
+import { useState } from "react";
 import RevealWrapper from "@/components/util/RevealWrapper";
 
 const epilogue = Epilogue({ subsets: ["latin"], weight: ["300", "400", "500"] });
@@ -23,6 +26,69 @@ const contactDetails = [
 ];
 
 export default function ContactPageContent() {
+	const [formState, setFormState] = useState({
+		name: "",
+		email: "",
+		subject: "",
+		message: "",
+	});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+
+	const handleChange =
+		(field: keyof typeof formState) =>
+		(
+			event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		) => {
+			setFormState((current) => ({
+				...current,
+				[field]: event.target.value,
+			}));
+		};
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		setErrorMessage("");
+		setSuccessMessage("");
+		setIsSubmitting(true);
+
+		try {
+			const response = await fetch("/api/contact", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formState),
+			});
+
+			const result = (await response.json()) as {
+				error?: string;
+				success?: boolean;
+			};
+
+			if (!response.ok || !result.success) {
+				throw new Error(result.error || "Something went wrong.");
+			}
+
+			setSuccessMessage("Your message was sent successfully.");
+			setFormState({
+				name: "",
+				email: "",
+				subject: "",
+				message: "",
+			});
+		} catch (error) {
+			setErrorMessage(
+				error instanceof Error
+					? error.message
+					: "Unable to send your message right now.",
+			);
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<>
 			<section className="bg-brand-ivory px-4 pt-14 pb-10 sm:px-6 lg:px-10 lg:pt-18 lg:pb-12">
@@ -88,15 +154,21 @@ export default function ContactPageContent() {
 								Tell us what you need.
 							</h2>
 
-							<form className="mt-8 space-y-4">
+							<form className="mt-8 space-y-4" onSubmit={handleSubmit}>
 								<div className="grid gap-4 sm:grid-cols-2">
 									<input
 										type="text"
+										required
+										value={formState.name}
+										onChange={handleChange("name")}
 										placeholder="Your name"
 										className="h-13 rounded-[20px] border border-brand-border-button bg-brand-ivory px-5 text-sm text-brand-ink outline-none transition duration-300 placeholder:text-brand-copy-placeholder focus:border-brand-gold"
 									/>
 									<input
 										type="email"
+										required
+										value={formState.email}
+										onChange={handleChange("email")}
 										placeholder="Email address"
 										className="h-13 rounded-[20px] border border-brand-border-button bg-brand-ivory px-5 text-sm text-brand-ink outline-none transition duration-300 placeholder:text-brand-copy-placeholder focus:border-brand-gold"
 									/>
@@ -104,22 +176,41 @@ export default function ContactPageContent() {
 
 								<input
 									type="text"
+									required
+									value={formState.subject}
+									onChange={handleChange("subject")}
 									placeholder="Subject"
 									className="h-13 w-full rounded-[20px] border border-brand-border-button bg-brand-ivory px-5 text-sm text-brand-ink outline-none transition duration-300 placeholder:text-brand-copy-placeholder focus:border-brand-gold"
 								/>
 
 								<textarea
+									required
+									value={formState.message}
+									onChange={handleChange("message")}
 									placeholder="How can we help?"
 									rows={6}
 									className="w-full rounded-[24px] border border-brand-border-button bg-brand-ivory px-5 py-4 text-sm text-brand-ink outline-none transition duration-300 placeholder:text-brand-copy-placeholder focus:border-brand-gold"
 								/>
 
+								{errorMessage && (
+									<p className="rounded-3xl border border-[#d7b7b2] bg-[#fff4f2] px-4 py-3 text-sm text-[#8c4f49]">
+										{errorMessage}
+									</p>
+								)}
+
+								{successMessage && (
+									<p className="rounded-3xl border border-[#cdd8c6] bg-[#f5fbf2] px-4 py-3 text-sm text-[#456246]">
+										{successMessage}
+									</p>
+								)}
+
 								<div className="flex flex-wrap gap-3">
 									<button
 										type="submit"
-										className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-gold bg-brand-gold px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300 hover:border-brand-gold-hover hover:bg-brand-gold-hover"
+										disabled={isSubmitting}
+										className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-gold bg-brand-gold px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300 hover:border-brand-gold-hover hover:bg-brand-gold-hover disabled:cursor-not-allowed disabled:opacity-70"
 									>
-										Send Message
+										{isSubmitting ? "Sending..." : "Send Message"}
 									</button>
 									<Link
 										href="/shop"

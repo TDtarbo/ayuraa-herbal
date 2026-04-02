@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Ephesis, Epilogue } from "next/font/google";
+import { Epilogue } from "next/font/google";
+import Image from "next/image";
 
-const ephesis = Ephesis({ subsets: ["latin"], weight: "400" });
 const epilogue = Epilogue({ subsets: ["latin"], weight: "400" });
 const epilogueLight = Epilogue({ subsets: ["latin"], weight: "300" });
 
@@ -56,10 +56,14 @@ const Hero = () => {
 							<span className="block">everyday care.</span>
 						</h1>
 
-						<div
-							className={`${ephesis.className} hero-script-title text-brand-gold mt-5`}
-						>
-							Ayurra Herbal
+						<div className="my-5 flex w-full max-w-90 justify-center sm:max-w-110 md:max-w-130 lg:max-w-115 lg:justify-start xl:max-w-135">
+							<Image
+								src="/logos/logo_v3.svg"
+								alt="Ayurra Herbal"
+								width={400}
+								height={400}
+								className="h-auto w-full"
+							/>
 						</div>
 
 						<p
@@ -69,19 +73,29 @@ const Hero = () => {
 							crafted with care and backed by science for everyday wellness.
 						</p>
 
-						<div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-start">
+						<div className="mt-9 flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
 							<Link
 								href="/products"
-								className="bg-brand-gold border-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover inline-flex min-h-11.5 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] text-white uppercase transition duration-300"
+								className="group bg-brand-gold border-brand-gold hover:border-brand-gold-hover hover:bg-brand-gold-hover inline-flex min-h-13 items-center justify-center rounded-full border px-4 py-2 text-white shadow-[0_14px_34px_rgba(183,157,103,0.24)] transition duration-300"
 							>
-								Shop Now
+								<span className="flex items-center gap-3 rounded-full bg-[#8f7340] px-4 py-3">
+									<span
+										className={`${epilogue.className} text-[11px] tracking-[0.24em] text-white uppercase`}
+									>
+										Shop Now
+									</span>
+									<span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#8f7340] transition duration-300 group-hover:translate-x-0.5">
+										&rarr;
+									</span>
+								</span>
 							</Link>
 
 							<Link
-								href="/products"
-								className="border-brand-border-button text-brand-copy-ui hover:border-brand-gold hover:text-brand-gold inline-flex min-h-11.5 items-center justify-center rounded-full border px-7 py-3 text-[11px] tracking-[0.24em] uppercase transition duration-300"
+								href="/about"
+								className={`${epilogue.className} text-brand-copy-ui hover:text-brand-ink group inline-flex items-center gap-3 text-[11px] tracking-[0.24em] uppercase transition duration-300`}
 							>
-								Explore Products
+								<span className="bg-brand-ink h-px w-8 transition duration-300 group-hover:w-10" />
+								Why Ayurra
 							</Link>
 						</div>
 

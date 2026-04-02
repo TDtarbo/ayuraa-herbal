@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { google } from "googleapis";
+import {
+	createGoogleSheetsClient,
+	getGoogleSheetAppendRange,
+	getGoogleSheetId,
+} from "@/lib/googleSheets";
+import { formatLkr } from "@/lib/currency";
 
 export const runtime = "nodejs";
 
@@ -9,7 +14,8 @@ const ORDER_SHEET_COLUMNS = [
 	"Customer Name",
 	"Phone Number",
 	"Address",
-	"Email",
+	"City",
+	"Payment Method",
 	"Notes",
 	"Distinct Items",
 	"Total Units",
@@ -30,7 +36,8 @@ type SubmittedOrderPayload = {
 	customerName: string;
 	phoneNumber: string;
 	address: string;
-	email?: string;
+	city: string;
+	paymentMethod: "Cash on Delivery" | "Card Payment";
 	notes?: string;
 	items: SubmittedOrderItem[];
 	subtotal: number;
@@ -44,12 +51,7 @@ function getOptionalValue(value?: string) {
 
 function formatItemsForSheet(payload: SubmittedOrderPayload) {
 	return payload.items
-		.map(
-			(item) =>
-				`${item.name} (${item.slug}) x${item.quantity} = $${(
-					item.price * item.quantity
-				).toFixed(2)}`,
-		)
+		.map((item) => `${item.name} x${item.quantity}`)
 		.join(" | ");
 }
 
@@ -77,7 +79,9 @@ function isValidItem(item: unknown): item is SubmittedOrderItem {
 	);
 }
 
-function isSubmittedOrderPayload(value: unknown): value is SubmittedOrderPayload {
+function isSubmittedOrderPayload(
+	value: unknown,
+): value is SubmittedOrderPayload {
 	if (!value || typeof value !== "object") {
 		return false;
 	}
@@ -91,7 +95,10 @@ function isSubmittedOrderPayload(value: unknown): value is SubmittedOrderPayload
 		payload.phoneNumber.trim().length > 0 &&
 		typeof payload.address === "string" &&
 		payload.address.trim().length > 0 &&
-		(payload.email === undefined || typeof payload.email === "string") &&
+		typeof payload.city === "string" &&
+		payload.city.trim().length > 0 &&
+		(payload.paymentMethod === "Cash on Delivery" ||
+			payload.paymentMethod === "Card Payment") &&
 		(payload.notes === undefined || typeof payload.notes === "string") &&
 		Array.isArray(payload.items) &&
 		payload.items.length > 0 &&
@@ -114,7 +121,10 @@ function createSheetRow({
 	payload: SubmittedOrderPayload;
 	placedAt: string;
 }) {
-	const totalUnits = payload.items.reduce((sum, item) => sum + item.quantity, 0);
+	const totalUnits = payload.items.reduce(
+		(sum, item) => sum + item.quantity,
+		0,
+	);
 
 	return [
 		orderId,
@@ -122,54 +132,21 @@ function createSheetRow({
 		payload.customerName.trim(),
 		payload.phoneNumber.trim(),
 		payload.address.trim(),
-		getOptionalValue(payload.email),
+		payload.city.trim(),
+		payload.paymentMethod,
 		getOptionalValue(payload.notes),
 		payload.items.length,
 		totalUnits,
 		formatItemsForSheet(payload),
-		payload.subtotal.toFixed(2),
-		payload.shipping.toFixed(2),
-		payload.total.toFixed(2),
+		formatLkr(payload.subtotal),
+		formatLkr(payload.shipping),
+		formatLkr(payload.total),
 	];
-}
-
-function getColumnLetter(columnNumber: number) {
-	let column = "";
-	let current = columnNumber;
-
-	while (current > 0) {
-		const remainder = (current - 1) % 26;
-		column = String.fromCharCode(65 + remainder) + column;
-		current = Math.floor((current - 1) / 26);
-	}
-
-	return column;
-}
-
-function getSheetsAuth() {
-	const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-	const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-
-	if (privateKey && clientEmail) {
-		return new google.auth.GoogleAuth({
-			credentials: {
-				client_email: clientEmail,
-				private_key: privateKey,
-			},
-			scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-		});
-	}
-
-	return new google.auth.GoogleAuth({
-		keyFile: "secret.json",
-		scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-	});
 }
 
 export async function POST(request: Request) {
 	try {
-		const sheetId = process.env.GOOGLE_SHEET_ID;
-		const sheetName = process.env.GOOGLE_SHEET_NAME || "Sheet1";
+		const sheetId = getGoogleSheetId();
 
 		if (!sheetId) {
 			return NextResponse.json(
@@ -195,15 +172,13 @@ export async function POST(request: Request) {
 			placedAt,
 		});
 
-		const auth = getSheetsAuth();
-		const client = await auth.getClient();
-		const googleSheets = google.sheets({ version: "v4", auth: client as any });
+		const googleSheets = createGoogleSheetsClient();
 
 		await googleSheets.spreadsheets.values.append({
 			spreadsheetId: sheetId,
-			range: `${sheetName}!A:${getColumnLetter(ORDER_SHEET_COLUMNS.length)}`,
+			range: getGoogleSheetAppendRange("orders", ORDER_SHEET_COLUMNS.length),
 			valueInputOption: "USER_ENTERED",
-			insertDataOption: "INSERT_ROWS",
+			insertDataOption: "OVERWRITE",
 			requestBody: {
 				values: [row],
 			},
