@@ -53,11 +53,6 @@ export function createGoogleSheetsClient() {
 			private_key: privateKey,
 			client_email: clientEmail,
 			client_id: process.env.GOOGLE_CLIENT_ID,
-			auth_uri: process.env.GOOGLE_AUTH_URI,
-			token_uri: process.env.GOOGLE_TOKEN_URI,
-			auth_provider_x509_cert_url:
-				process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
-			client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
 			universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN,
 		},
 		scopes: ["https://www.googleapis.com/auth/spreadsheets"],
